@@ -1,12 +1,12 @@
-####Hello!
+#### Hello!
 
 Thank you for reading my case study! In this study we will be creating simple evaluations using LLM-as-judge for evaluations. The evaluation types are listed below, as well as steps, and a section on design/trade-offs.
 
-###**Evaluation Types**
+### **Evaluation Types**
 
 Below are the different types of evaluations that this code is capable of achieving and what their input should look like.
 
-##*Single Evaluations*
+## *Single Evaluations*
 This code works as a simple way to test LLM responses using an LLM-as-judge structure. Each inputted query will be graded on task completion, empathy, conciseness, naturalness, safety and clarity. The inputted query must be structured as follows:
 ```json 
 {
@@ -33,7 +33,7 @@ This code works as a simple way to test LLM responses using an LLM-as-judge stru
 }
 ```
 
-##*Batch Evaluations*
+## *Batch Evaluations*
 
 Batch evaluation basically calls a list of single evaluations and provides a summary of all of the improvements that can be made at the end.
 ```json 
@@ -79,7 +79,7 @@ Batch evaluation basically calls a list of single evaluations and provides a sum
 }
 ```
 
-##*Comparisons*
+## *Comparisons*
 
 Comparison takes in a single directive and user input, and compares the responses of two prompts or models.
 ```json
@@ -109,7 +109,7 @@ Comparison takes in a single directive and user input, and compares the response
 }
 ```
 
-##*Improvement Suggestions*
+## *Improvement Suggestions*
 
 Takes in an existing response and provides an improved response and recommendations on how to improve the response. It also provides an improved score.
 ```json
@@ -135,15 +135,15 @@ Takes in an existing response and provides an improved response and recommendati
 ```
 
 
-###**Steps for Running Code**
+### **Steps for Running Code**
 
-##*1. Clone the repo*
+## *1. Clone the repo*
 
 Run:
 ```bash
 git clone https://github.com/rae0rae/blooming_health_case_study.git
 ```
-##*2. Copy .env.example and add your own Open AI key to the new .env file*
+## *2. Copy .env.example and add your own Open AI key to the new .env file*
 
 Run:
 ```bash
@@ -151,7 +151,7 @@ cp .env.example .env
 ```
 And edit the new .env file. The .env file currently is OPENAI_API_KEY = "YOUR-API-KEY-HERE", replace YOUR-API-KEY-HERE with your personal key.
 
-##*3. Install dependencies*
+## *3. Install dependencies*
 This code was built on top of the uvicorn ASGI so it works best with it! However if that is not installed, you can still make it work with pip.
 
 ```bash
@@ -164,7 +164,7 @@ uv sync #(preferred)
 pip install -r requirements.txt
 ```
 
-##*4. Run the server*
+## *4. Run the server*
 ```bash
 uv run uvicorn main:app --reload
 ```
@@ -175,9 +175,9 @@ OR (if using pip)
 uvicorn main:app --reload
 ```
 
-##*5. Open http://127.0.0.1:8000/docs to test all endpoints!*
+## *5. Open http://127.0.0.1:8000/docs to test all endpoints!*
 
-###**Design and Trade-offs**
+### **Design and Trade-offs**
 
 First I built the api posts and routers, separating each evaluator into its own router. This was specifically to match the case study rubric but also was the most organized approach and led to an easy, organized build for the rest of the system. This also gave me a good place to start with class declarations and pydantic.
 Once the endpoints and data structures were settled, I needed to build the actual evaluation agent.
