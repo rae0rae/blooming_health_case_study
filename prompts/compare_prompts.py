@@ -13,9 +13,11 @@ def get_compare_prompt(request) -> str:
 
       Return your evaluation as JSON in exactly this format:
         {{
-            "winner": "a", "b", or "tie", 
+            "winner": "a, b, or tie", 
             "reasoning": "your reasoning here"
-        }}"""
+        }}
+        
+        Winner MUST be a, b, or tie. Do not input anything else into winner's value."""
     
 def get_recommendations_prompt(dimensions, winner) -> str:
     return f"""Your job is to give a recommendation for which prompt to use given the context. For example, if response a seems to have a good score with empathy, you should output a sentence like "Response A is preferred for empathetic scenarios." 
