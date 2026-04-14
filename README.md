@@ -177,6 +177,18 @@ uvicorn main:app --reload
 
 ### *5. Open http://127.0.0.1:8000/docs to test all endpoints!*
 
+You can also test using test.py:
+
+```bash
+uv run pytest tests.py -v
+```
+
+or with pip:
+
+```bash
+pytest tests.py -v
+```
+
 ## **Design and Trade-offs**
 
 ### Endpoints

@@ -1,4 +1,3 @@
-import asyncio
 import json
 from api.models.responses import ImproveResponse
 from evaluators.run_evaluation import call_llm, run_evaluation

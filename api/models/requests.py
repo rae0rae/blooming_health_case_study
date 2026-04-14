@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional
 
 class ConvoStructure(BaseModel):
@@ -6,7 +6,7 @@ class ConvoStructure(BaseModel):
     content: str
     
 class Context(BaseModel):
-    conversation_history: list[ConvoStructure]
+    conversation_history: list[ConvoStructure] = Field(default_factory=list)
     current_directive: str
     user_input: str
 
