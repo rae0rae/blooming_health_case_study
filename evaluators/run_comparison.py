@@ -47,14 +47,14 @@ async def get_recommendation(dimensions, winner, model, client) -> str:
     return response
 
 async def get_compare_dimensions(request, model, client) -> CompareJudgeOutput:
-    SYSTEM_PROMPT = get_compare_prompt(request)
+    BASE_PROMPT = get_compare_prompt(request)
     results = await asyncio.gather(
-        call_llm(SYSTEM_PROMPT+TASK_COMPLETION_COMPARE_PROMPT, model, client),
-        call_llm(SYSTEM_PROMPT+EMPATHY_COMPARE_PROMPT, model, client),
-        call_llm(SYSTEM_PROMPT+CONCISENESS_COMPARE_PROMPT, model, client),
-        call_llm(SYSTEM_PROMPT+NATURALNESS_COMPARE_PROMPT, model, client),
-        call_llm(SYSTEM_PROMPT+SAFETY_COMPARE_PROMPT, model, client),
-        call_llm(SYSTEM_PROMPT+CLARITY_COMPARE_PROMPT, model, client),
+        call_llm(BASE_PROMPT+TASK_COMPLETION_COMPARE_PROMPT, model, client),
+        call_llm(BASE_PROMPT+EMPATHY_COMPARE_PROMPT, model, client),
+        call_llm(BASE_PROMPT+CONCISENESS_COMPARE_PROMPT, model, client),
+        call_llm(BASE_PROMPT+NATURALNESS_COMPARE_PROMPT, model, client),
+        call_llm(BASE_PROMPT+SAFETY_COMPARE_PROMPT, model, client),
+        call_llm(BASE_PROMPT+CLARITY_COMPARE_PROMPT, model, client),
     )
     try:
         return CompareJudgeOutput(

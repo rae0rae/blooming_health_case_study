@@ -15,7 +15,7 @@ async def run_improve(request, model, client) -> ImproveResponse:
         improved_score=new_score,
         changes_made=changes_made
     )
-async def get_improve_and_changes_made(request, model, client) -> list[str]:
+async def get_improve_and_changes_made(request, model, client) -> tuple[str, list[str]]:
     prompt = get_improve_prompt(request)
     response = await call_llm(prompt, model, client)
     try:

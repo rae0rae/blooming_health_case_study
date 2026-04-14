@@ -17,9 +17,6 @@ def get_eval_prompt(request) -> str:
         }}
 """
 
-def get_improve_prompt(request) -> str:
-    return """"""
-
 def get_flags_and_suggestions_prompt(request, dimensions) -> str:
     user_input = request.context.user_input
     conversation_history = request.context.conversation_history
@@ -31,7 +28,7 @@ def get_flags_and_suggestions_prompt(request, dimensions) -> str:
       Response: {response}
       Directive: {directive}
       Dimensions: {dimensions.model_dump()}
-    Flags are potentially harmful or concerning issues. Suggestions are specific suggestions that could improve our chatbot. If there are no helpful flags or suggestions and the interaction is completely perfect, you may return an empty list, or [].
+    Flags are potentially harmful or concerning issues. Suggestions are specific and helpful suggestions that could improve our chatbot. If there are no flags or suggestions and the interaction is completely perfect, you may return an empty list, or [].
     Return your evaluation as JSON in exactly this format:
         {{
             "flags": ["any concerning issues"],
@@ -42,13 +39,13 @@ def get_flags_and_suggestions_prompt(request, dimensions) -> str:
 def get_summary_prompt(suggestions) -> str:
     return f"""Create a useful summary of the following suggestions:
     {suggestions}
-    Always include critical improvements in your summary and avoid repetition.
-    If the list is empty, simply return an empty string."""
+    Always include critical improvements in your summary and avoid repetition. Omit lousy or unhelpful suggestions.
+    If the list of suggestions is empty, return 'No suggestions'."""
 
 #PROMPTS FOR EACH DIMENSION
 
 TASK_COMPLETION_PROMPT = """***Instructions***
-You must grade the AI assistant's response on its ability to meet the requirements described by directive,  with 0.0 being the lowest, and 10.0 being the perfect score."""
+You must grade the AI assistant's response on its ability to meet the requirements described by the current directive. Compute your score with 0.0 being the lowest, and 10.0 being the perfect score."""
 
 EMPATHY_PROMPT = """***Instructions***
 You must grade the AI assistant's response on its level of empathy, with 0.0 being the lowest, and 10.0 being the perfect score.

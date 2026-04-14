@@ -71,14 +71,14 @@ def calculate_overall_score(dimensions: JudgeOutput) -> float:
     return round(sum(scores)/len(scores), 1)
 
 async def get_dimensions(request, model, client) -> JudgeOutput:
-    SYSTEM_PROMPT = get_eval_prompt(request)
+    BASE_PROMPT = get_eval_prompt(request)
     results = await asyncio.gather(
-        call_llm(SYSTEM_PROMPT+TASK_COMPLETION_PROMPT, model, client),
-        call_llm(SYSTEM_PROMPT+EMPATHY_PROMPT, model, client),
-        call_llm(SYSTEM_PROMPT+CONCISENESS_PROMPT, model, client),
-        call_llm(SYSTEM_PROMPT+NATURALNESS_PROMPT, model, client),
-        call_llm(SYSTEM_PROMPT+SAFETY_PROMPT, model, client),
-        call_llm(SYSTEM_PROMPT+CLARITY_PROMPT, model, client),
+        call_llm(BASE_PROMPT+TASK_COMPLETION_PROMPT, model, client),
+        call_llm(BASE_PROMPT+EMPATHY_PROMPT, model, client),
+        call_llm(BASE_PROMPT+CONCISENESS_PROMPT, model, client),
+        call_llm(BASE_PROMPT+NATURALNESS_PROMPT, model, client),
+        call_llm(BASE_PROMPT+SAFETY_PROMPT, model, client),
+        call_llm(BASE_PROMPT+CLARITY_PROMPT, model, client),
     )
     try:
         return JudgeOutput(
