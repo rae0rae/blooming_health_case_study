@@ -202,7 +202,7 @@ Once the endpoints and data structures were settled, I needed to build the actua
 
 Prompts are all held in the prompts folder with separate prompts for each evaluator.
 
-Each evaluator has its own base prompt that took in each request's data so that it had context within the prompt, allowing the LLM to make a more informed decision. I decided to separate each dimension prompt for higher accuracy and lower probability of the outputted JSON being invalid/hallucinated. Each dimension is scored concurrently using asyncio.gather to reduce latency. Since there are 6 calls being made at once, I also added return_exceptions=True, in case 
+Each evaluator has its own base prompt that took in each request's data so that it had context within the prompt, allowing the LLM to make a more informed decision. I decided to separate each dimension prompt for higher accuracy and lower probability of the outputted JSON being invalid/hallucinated. Each dimension is scored concurrently using asyncio.gather to reduce latency.
 When calling the actual LLM for the dimensions, the prompt being passed in was both the evaluator's base prompt, and the individual dimensions prompt. The base prompt is a very short prompt that gives context to the LLM, including the appropriate output structure, where the dimension-specific prompt gives specific instructions for the domain being evaluated. Token usage was kept in mind when composing the prompts, especially the base prompt.
 
 Flags and suggestions are its own separate prompt so that the judge can use the previously calculated dimensions as context for its output.
@@ -213,8 +213,16 @@ The prompts themselves contain a chain-of-thought reasoning structure and incorp
 
 ### What I would improve with more time
 
-If I had more time, I would make is to look more closely at LLM outputs and create more data validation error checks for the LLM responses. I would do so especially with the dimensions call, where 6 llm calls are made at once, and if one fails they all do. It is best practice to always keep track of any data validation errors and have a plan b such as retrying x amount of times, moving on to the next evaluation, or exiting with an error that specifies where the system broke.
+If I had more time, I would look more closely at LLM outputs and create more data validation error checks for the LLM responses. I would do so especially with the dimensions call, where 6 LLM calls are made at once, and if one fails they all do. It is best practice to always keep track of any data validation errors and have a plan b such as retrying x amount of times, moving on to the next evaluation, or exiting with an error that specifies where the system broke.
 
-Another thing I would do is spend more time improving the prompts and testing for edge cases. I also would have liked to have had the evaluators, batch evaluation especially, output into a dataframe so that we could examine the results in a more organized way and see where improvements could be made. I would also set up batch evaluations for compare and improve, as well as have more than two responses able to compete for compare.
+Another thing I would do is spend more time improving the prompts and testing for edge cases. I also would have liked to have had the evaluators, batch evaluation especially, output into a dataframe so that we could examine the results in a more organized way and see where improvements could be made, including metadata like model/prompt versions so we can compare which are best. I would also set up batch evaluations for compare and improve, as well as have more than two responses able to compete for compare.
 
 I also would like to simplify/consolidate the code and prompts a bit more to be less repetitive. I would do this especially with the prompts, and try to format the dimension ones specifically to be used for both evaluate and compare, with the compare or evaluation reasoning living in their base prompts.
+
+
+### Assumptions made
+
+-Batch evaluations are always lists containing one or more elements (otherwise there will be a divide by zero error in the evaluation code)
+-Success is determined as anything equal to or over 80% when calculating success rate
+-Responses have already been generated and are being graded, except for improved responses
+-LLMs always output valid JSONs (there are not many validation stops beyond the input and output, as mentioned above)
