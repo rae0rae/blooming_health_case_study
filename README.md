@@ -209,10 +209,12 @@ Flags and suggestions are its own separate prompt so that the judge can use the 
 
 For batch evaluation, flags and suggestions_summary is also done at the end so that it has the complete context. Flags in batch_evaluation takes all of the outputted lists and creates a set to avoid duplicates, but in production this would be better to have an actual filter or another LLM consolidating the list. No matter what, performing this step at the end of the rest of the evaluation would still be the best choice in my opinion.
 
-The prompts themselves contain a chain-of-thought reasoning structure, which increases reliability and accuracies in its output. With more time and evaluation, I would also add few shot examples to the prompt for better results, especially for outputs that are not reliable.
+The prompts themselves contain a chain-of-thought reasoning structure and incorporate real time context, which increases reliability and accuracies in its output. With more time and evaluation, I would also add few shot examples to the prompt for better results, especially for outputs that are deemed not reliable during testing.
 
 ### What I would improve with more time
 
 If I had more time, I would make is to look more closely at LLM outputs and create more data validation error checks for the LLM responses. I would do so especially with the dimensions call, where 6 llm calls are made at once, and if one fails they all do. It is best practice to always keep track of any data validation errors and have a plan b such as retrying x amount of times, moving on to the next evaluation, or exiting with an error that specifies where the system broke.
 
-Another thing I would do is spend more time improving the prompts and testing for edge cases. I also would have liked to have had the evaluators, batch evaluation especially, output into a dataframe so that we could examine the results in a more organized way and see where improvements could be made. I would also set up batch evaluations for compare and improve and try to simplify/consolidate the code and prompts a bit more to be less repetitive.
+Another thing I would do is spend more time improving the prompts and testing for edge cases. I also would have liked to have had the evaluators, batch evaluation especially, output into a dataframe so that we could examine the results in a more organized way and see where improvements could be made. I would also set up batch evaluations for compare and improve, as well as have more than two responses able to compete for compare.
+
+I also would like to simplify/consolidate the code and prompts a bit more to be less repetitive. I would do this especially with the prompts, and try to format the dimension ones specifically to be used for both evaluate and compare, with the compare or evaluation reasoning living in their base prompts.
