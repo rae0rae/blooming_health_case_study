@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
 from main import app
+import json
 
 client = TestClient(app)
 
@@ -17,6 +18,7 @@ def test_evaluation_simple():
                 "model": "gpt-4o-mini"
             }
             })
+    print(json.dumps(response.json(), indent=2))
     assert response.status_code == 200
     assert response.json()["overall_score"] > 7 #this should be a success, checking that it meets at least 7/10
 
@@ -93,6 +95,7 @@ def test_compare_empathy():
             "model": "gpt-4o-mini"
         }
     })
+    # print(json.dumps(response.json(), indent=2))
     assert response.status_code == 200
     assert response.json()["winner"] == "a"
 

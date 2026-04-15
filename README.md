@@ -166,13 +166,13 @@ pip install -r requirements.txt
 
 ### *4. Run the server*
 ```bash
-uv run uvicorn main:app --reload
+uv run uvicorn main:app
 ```
 
 OR (if using pip)
 
 ```bash
-uvicorn main:app --reload
+uvicorn main:app
 ```
 
 ### *5. Open http://127.0.0.1:8000/docs to test all endpoints!*
