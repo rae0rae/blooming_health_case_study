@@ -180,13 +180,13 @@ uvicorn main:app
 You can also test using test.py:
 
 ```bash
-uv run pytest tests.py -v
+uv run pytest tests.py -v -s
 ```
 
 or with pip:
 
 ```bash
-pytest tests.py -v
+pytest tests.py -v -s
 ```
 
 ## **Design and Trade-offs**
